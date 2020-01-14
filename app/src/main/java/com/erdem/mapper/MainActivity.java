@@ -15,38 +15,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setup_checkPermissions();
+        PermissionHandler.setup_checkPermissions(MainActivity.this,this);
         LocationHandler LOCATION_=new LocationHandler(MainActivity.this);
 
     }
     /*PERMISSIONS*/
-    private String[] PERMISSIONS = {
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.ACCESS_FINE_LOCATION,
-    };
-    private void setup_checkPermissions(){
-        int PERMISSION_ALL = 1;
-        String[] PERMISSIONS = {
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.ACCESS_FINE_LOCATION,
-        };
 
-        if (!hasPermissions(MainActivity.this, PERMISSIONS)) {
-            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
-        }
-    }
-    public static boolean hasPermissions(Context context, String... permissions) {
-        if (context != null && permissions != null) {
-            for (String permission : permissions) {
-                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
     /**/
 
 }
