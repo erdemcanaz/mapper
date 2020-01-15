@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         /**/
         PermissionHandler.setup_checkPermissions(MainActivity.this,this);
         LocationHandler LOCATION_=new LocationHandler(MainActivity.this);
+
         /**/
 
         myCanvas=new CanvasHandler(this,null);
@@ -32,24 +33,28 @@ public class MainActivity extends AppCompatActivity {
 
     }
     //////////////////////////////
+    float touchX,touchY;
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
-        int X = (int) event.getX();
-        int Y = (int) event.getY();
+        float X = (int) event.getX();
+        float Y = (int) event.getY();
         int eventaction = event.getAction();
 
         switch (eventaction) {
             case MotionEvent.ACTION_DOWN:
-                Toast.makeText(this, "ACTION_DOWN AT COORDS "+"X: "+X+" Y: "+Y, Toast.LENGTH_SHORT).show();
+                touchX=X;
+                touchY=Y;
                 break;
 
             case MotionEvent.ACTION_MOVE:
-                Toast.makeText(this, "MOVE "+"X: "+X+" Y: "+Y, Toast.LENGTH_SHORT).show();
+                myCanvas.pushCanvas(-(touchX-X),-(touchY-Y));
+                touchX=X;
+                touchY=Y;
+                myCanvas.redrawCanvas();
                 break;
 
             case MotionEvent.ACTION_UP:
-                Toast.makeText(this, "ACTION_UP "+"X: "+X+" Y: "+Y, Toast.LENGTH_SHORT).show();
                 break;
         }
         return true;

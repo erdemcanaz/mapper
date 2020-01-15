@@ -34,7 +34,7 @@ public class CanvasHandler extends View {
     protected  void onDraw(Canvas canvas){
         super.onDraw(canvas);
         if(!CLEAN) {
-            canvas.drawPath(path, paint);
+           // canvas.drawPath(path, paint);
             Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.abc);
             canvas.drawBitmap(b, 50+pushX, 50+pushY, paint);
         }else{CLEAN=!CLEAN;}
@@ -45,6 +45,9 @@ public class CanvasHandler extends View {
     public void cleanCanvas(){
         CLEAN=true;
         invalidate();
+    }
+    public void redrawCanvas(){
+            invalidate();
     }
     public void line(float x1,float y1,float x2,float y2,int STROKE,int COLOR){
         paint.setStrokeWidth(STROKE);
