@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    CanvasHandler myCanvas;
+    static CanvasHandler myCanvas;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,30 +25,29 @@ public class MainActivity extends AppCompatActivity {
         /**/
 
         myCanvas=new CanvasHandler(this,null);
-        myCanvas.pushCanvas(0,600);
-        myCanvas.line(300,250,250,300,5, Color.RED);
         //myCanvas.cleanCanvas();
 
         setContentView(myCanvas);
 
     }
     //////////////////////////////
-    float touchX,touchY;
+    static float touchX=0,touchY=0;
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
         float X = (int) event.getX();
         float Y = (int) event.getY();
         int eventaction = event.getAction();
-
+        UI.buttonClicked(X,Y);
         switch (eventaction) {
             case MotionEvent.ACTION_DOWN:
                 touchX=X;
                 touchY=Y;
+                Log.d("a", "onTouchEvent: "+touchX+" "+touchY);
                 break;
 
             case MotionEvent.ACTION_MOVE:
-                myCanvas.pushCanvas(-(touchX-X),-(touchY-Y));
+                if(touchY<1030)myCanvas.pushCanvas(-(touchX-X),-(touchY-Y));
                 touchX=X;
                 touchY=Y;
                 myCanvas.redrawCanvas();
