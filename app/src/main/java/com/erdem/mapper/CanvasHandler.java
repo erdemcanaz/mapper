@@ -17,9 +17,9 @@ public class CanvasHandler extends View {
     Paint paint[]=new Paint[100];
     Path path[]=new Path[100];
 
-    private float pushX=0;
-    private float pushY=0;
-    private float zoom=1;
+    static float pushX=0;
+    static float pushY=0;
+    static float zoom=1;
 
 
     public CanvasHandler(Context context, AttributeSet attrs){
@@ -43,7 +43,7 @@ public class CanvasHandler extends View {
         defineSelectedButtons();
 
         Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.loc_7);
-        canvas.drawBitmap(b, 360, 520, paint[0]);
+        canvas.drawBitmap(b, (int)UI.origin[0], (int)UI.origin[1], paint[0]);
         b = BitmapFactory.decodeResource(getResources(), R.drawable.button_46_2);
         canvas.drawBitmap(b, 10, 915, paint[0]);//menu
         canvas.drawPath(path[0], paint[0]);
@@ -88,6 +88,11 @@ public class CanvasHandler extends View {
         else if(UI.path_state==1)path[1].addRect(510,925,610,1020, Path.Direction.CCW);
         else if(UI.path_state==2)path[1].addRect(610,925,710,1020, Path.Direction.CCW);
 
+        if(UI.object_state==0)path[1].addRect(10,1010,110,1110, Path.Direction.CCW);
+        else if(UI.object_state==1)path[1].addRect(110,1010,210,1110, Path.Direction.CCW);
+        else if(UI.object_state==2)path[1].addRect(210,1010,310,1110, Path.Direction.CCW);
+        else if(UI.object_state==3)path[1].addRect(310,1010,410,1110, Path.Direction.CCW);
+        else if(UI.object_state==4)path[1].addRect(410,1010,510,1110, Path.Direction.CCW);
 
     }
 }

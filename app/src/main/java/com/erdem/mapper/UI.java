@@ -6,6 +6,8 @@ public class UI {
     static int plant_state=-1;
     static int path_state=-1;
     static int object_state=-1;
+    static double origin[]={335,475};
+
     public UI(){}
 
     static long lastTime=0;
@@ -47,9 +49,13 @@ public class UI {
                 } else if (in(x, 400, 500)) {
                     object_state = 4;
                 } else if (in(x, 500, 600)) {
-                    //zoom in
+                    CanvasHandler.zoom*=2;
+                    CanvasHandler.pushY=0;
+                    CanvasHandler.pushX=0;
                 } else if (in(x, 600, 700)) {
-                    //zoom out
+                    CanvasHandler.zoom/=2;
+                    CanvasHandler.pushY=0;
+                    CanvasHandler.pushX=0;
                 }
             }
             Log.d("button", plant_state + " " + path_state + " " + object_state);
