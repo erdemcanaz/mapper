@@ -19,7 +19,9 @@ public class CanvasHandler extends View {
 
     static float pushX=0;
     static float pushY=0;
-    static float zoom=1;
+    static int zoom=1;
+    // half_width, half_height;
+    static int zoomParameters[][]={{10,20},{40,60},{100,150},{200,300},{800,1200}};
 
 
     public CanvasHandler(Context context, AttributeSet attrs){
@@ -33,20 +35,73 @@ public class CanvasHandler extends View {
         path[1]= new Path();
         paint[1]=new Paint();
         paint[1].setStrokeWidth(12f);
-        paint[1].setColor(Color.GRAY);
+        paint[1].setColor(Color.GREEN);
         paint[1].setStyle(Paint.Style.STROKE);
 
     }
+    static Bitmap b;
     @Override
     protected  void onDraw(Canvas canvas){
         super.onDraw(canvas);
         defineSelectedButtons();
 
-        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.loc_7);
-        canvas.drawBitmap(b, (int)UI.origin[0], (int)UI.origin[1], paint[0]);
-        b = BitmapFactory.decodeResource(getResources(), R.drawable.button_46_2);
+        ////TEXTURE
+        double dLan,dLon,x,y;
+        for(int i=0;i<DataHandler.data.length-6;i+=6){
+             dLan=DataHandler.data[i]-LocationHandler.GEO[0];
+             dLon=LocationHandler.GEO[1]-DataHandler.data[i+1];
+            x=GeoCalculation.dLon_to_pix(zoomParameters[zoom][0],UI.origin[0],dLon)+UI.origin[0];
+            y=GeoCalculation.dLat_to_pix(zoomParameters[zoom][1],UI.origin[1],dLan)+UI.origin[1];
+            Log.d("CanvasHandler",i+":"+dLan+" "+dLon+" "+DataHandler.data[i+2]+" "+DataHandler.data[i+3]+" "+DataHandler.data[i+4]+" "+DataHandler.data[i+5]);
+           if(DataHandler.data[i+3]==0){
+               b= BitmapFactory.decodeResource(getResources(), R.drawable.half_open_land);
+               canvas.drawBitmap(b,(int)(x+pushX), (int)(y+pushY), paint[0]);
+           }else if(DataHandler.data[i+3]==1){
+               b= BitmapFactory.decodeResource(getResources(), R.drawable.forest);
+               canvas.drawBitmap(b,(int)(x+pushX), (int)(y+pushY), paint[0]);
+           }else if(DataHandler.data[i+3]==2){
+               b= BitmapFactory.decodeResource(getResources(), R.drawable.bush);
+               canvas.drawBitmap(b,(int)(x+pushX), (int)(y+pushY), paint[0]);
+           }else if(DataHandler.data[i+3]==3){
+               b= BitmapFactory.decodeResource(getResources(), R.drawable.open_land);
+               canvas.drawBitmap(b,(int)(x+pushX), (int)(y+pushY), paint[0]);
+           }
+            //////////
+            if(DataHandler.data[i+4]==0){
+                b= BitmapFactory.decodeResource(getResources(), R.drawable.road);
+                canvas.drawBitmap(b,(int)(x+pushX), (int)(y+pushY), paint[0]);
+            }else if(DataHandler.data[i+4]==1){
+                b= BitmapFactory.decodeResource(getResources(), R.drawable.fence);
+                canvas.drawBitmap(b,(int)(x+pushX), (int)(y+pushY), paint[0]);
+            }else if(DataHandler.data[i+4]==2){
+                b= BitmapFactory.decodeResource(getResources(), R.drawable.path);
+                canvas.drawBitmap(b,(int)(x+pushX), (int)(y+pushY), paint[0]);
+            }
+            //////////////
+            if(DataHandler.data[i+5]==0){
+                b= BitmapFactory.decodeResource(getResources(), R.drawable.pit);
+                canvas.drawBitmap(b,(int)(x+pushX), (int)(y+pushY), paint[0]);
+            }else if(DataHandler.data[i+5]==1){
+                b= BitmapFactory.decodeResource(getResources(), R.drawable.cave);
+                canvas.drawBitmap(b,(int)(x+pushX), (int)(y+pushY), paint[0]);
+            }else if(DataHandler.data[i+5]==2){
+                b= BitmapFactory.decodeResource(getResources(), R.drawable.stone);
+                canvas.drawBitmap(b,(int)(x+pushX), (int)(y+pushY), paint[0]);
+            }else if(DataHandler.data[i+5]==3){
+                b= BitmapFactory.decodeResource(getResources(), R.drawable.root);
+                canvas.drawBitmap(b,(int)(x+pushX), (int)(y+pushY), paint[0]);
+            }else if(DataHandler.data[i+5]==4){
+                b= BitmapFactory.decodeResource(getResources(), R.drawable.soil);
+                canvas.drawBitmap(b,(int)(x+pushX), (int)(y+pushY), paint[0]);
+            }
+
+        }//FOR
+
+
+        b= BitmapFactory.decodeResource(getResources(), R.drawable.loc_7);
+        //canvas.drawBitmap(b, (int)UI.origin[0]+pushX, (int)UI.origin[1]+pushY, paint[0]);
+        b = BitmapFactory.decodeResource(getResources(), R.drawable.button_46_3);
         canvas.drawBitmap(b, 10, 915, paint[0]);//menu
-        canvas.drawPath(path[0], paint[0]);
         canvas.drawPath(path[1], paint[1]);
 
 
@@ -76,6 +131,7 @@ public class CanvasHandler extends View {
     public void pushCanvas(float d_pushX,float d_pushY){
         this.pushX+=d_pushX;
         this.pushY+=d_pushY;
+        Log.d("canvas", "pushCanvas: "+pushX+" : "+pushY);
     }
     public void defineSelectedButtons(){
         path[1]=new Path();

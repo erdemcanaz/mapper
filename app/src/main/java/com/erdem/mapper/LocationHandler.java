@@ -32,7 +32,9 @@ public class LocationHandler {
                 GEO[0]=locationResult.getLastLocation().getLatitude();
                 GEO[1]=locationResult.getLastLocation().getLongitude();
                 GEO[2]=locationResult.getLastLocation().getAltitude();
-               // Log.d("main","lat:"+LocationHandler.GEO[0]+" lon:"+LocationHandler.GEO[1]+" alt:"+LocationHandler.GEO[2]);
+                Log.d("main","lat:"+LocationHandler.GEO[0]+" lon:"+LocationHandler.GEO[1]+" alt:"+LocationHandler.GEO[2]);
+               //  Log.d("main","lat:"+GeoCalculation.dLat_to_pix(10,100,	0.0001));
+
                 GeoCalculation.set_DISTANCE_BETWEEN_LONGITUDE_METER(GEO[0]);
                 dataHandler.addNewData(GEO[0],GEO[1],GEO[2],UI.plant_state,UI.path_state,UI.object_state);
                 MainActivity.myCanvas.redrawCanvas();

@@ -39,26 +39,28 @@ public class UI {
                 }
             } else if (y > 1179) {
                 if (in(x, 0, 100)) {
+                    if(object_state==0)object_state = -1;
                     object_state = 0;
                 } else if (in(x, 100, 200)) {
+                    if(object_state==1)object_state = -1;
                     object_state = 1;
                 } else if (in(x, 200, 300)) {
+                    if(object_state==2)object_state = -1;
                     object_state = 2;
                 } else if (in(x, 300, 400)) {
+                    if(object_state==3)object_state = -1;
                     object_state = 3;
                 } else if (in(x, 400, 500)) {
+                    if(object_state==4)object_state = -1;
                     object_state = 4;
                 } else if (in(x, 500, 600)) {
-                    CanvasHandler.zoom*=2;
-                    CanvasHandler.pushY=0;
-                    CanvasHandler.pushX=0;
+                    CanvasHandler.zoom=(CanvasHandler.zoom+1)%CanvasHandler.zoomParameters.length;
                 } else if (in(x, 600, 700)) {
-                    CanvasHandler.zoom/=2;
                     CanvasHandler.pushY=0;
                     CanvasHandler.pushX=0;
                 }
             }
-            Log.d("button", plant_state + " " + path_state + " " + object_state);
+            //Log.d("button", plant_state + " " + path_state + " " + object_state);
             lastTime=System.currentTimeMillis();
             MainActivity.myCanvas.redrawCanvas();
         }
